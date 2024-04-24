@@ -47,7 +47,10 @@ for csv in csv_files:
         print({csv.name}, Total, file=f)
         #above has to be in the for loop so all the totals get added. overall 1835/1841 assemblies were successfully read!
 
-# find out why it doesnt iterate over everything. but it works up to a point
+# Example output:
+# {AlignmentA.csv} 258
+# {AlignmenB.csv} 132
+# ...
 # i had to put print(csv) before the pd.read up top and delete empty files and the script works.
 # first try for the ones i have
 #start = 5367
