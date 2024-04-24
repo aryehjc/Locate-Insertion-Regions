@@ -49,7 +49,7 @@ for csv in csv_files:
 
 # Example output:
 # {AlignmentA.csv} 258
-# {AlignmenB.csv} 132
+# {AlignmentB.csv} 132
 # ...
 # i had to put print(csv) before the pd.read up top and delete empty files and the script works.
 # first try for the ones i have
