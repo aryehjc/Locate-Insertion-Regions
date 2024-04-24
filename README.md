@@ -1,2 +1,2 @@
 # Locate-Insertion-Regions
-Find possible insertion sequences (mobile genetic elements) in genome assembly
+Find possible phage insertions in genome assembly
