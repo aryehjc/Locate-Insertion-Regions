@@ -85,7 +85,7 @@ for csv in csv_files:
     print(df["Total_Insertions"])
     print(df["Insertions_Found"])
     print(f'{csv.name} saved.')
-    with open("Cmondudewhy.txt", "a") as f:
+    with open("InsertionRegions_RN4220_1.txt", "a") as f:
         print({csv.name}, Insertion_Total_Count, file=f)
     
         #above has to be in the for loop so all the totals get added. overall 1835/1841 assemblies were successfully read!
