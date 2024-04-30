@@ -68,20 +68,26 @@ for csv in csv_files:
         return total
 
     df['Insertions_Found'] = df['All_Positions'].apply(filter_and_sum)
-    df['Total_Insertions'] = np.count_nonzero(df['Insertions_Found'])
+    df.drop(df[df.Insertions_Found > 174345].index, inplace = True)
+    unique_nonzero_values = np.unique(df[df['Insertions_Found'] != 0]['Insertions_Found'])
+    total_unique_nonzero_insertions = len(unique_nonzero_values)
+    df['Total_Insertions'] = total_unique_nonzero_insertions
 
     Total_Indels = df['Indel Regions'].sum()
     df["Total_Indels"] = df['Indel Regions'].sum()
     print(df)
     print(Total_Indels)
-    Insertion_Total_Count = np.count_nonzero(df['Insertions_Found'])
+    Insertion_Total_Count =  total_unique_nonzero_insertions
     df['Sequence'] = df['Sequence'].str.replace(' ','.', regex=False)
     print(df)
     print(Total_Indels)
     print(Insertion_Total_Count)
+    print(df["Total_Insertions"])
+    print(df["Insertions_Found"])
     print(f'{csv.name} saved.')
-    with open("Insertion_Regions.txt", "a") as f:
+    with open("Cmondudewhy.txt", "a") as f:
         print({csv.name}, Insertion_Total_Count, file=f)
+    
         #above has to be in the for loop so all the totals get added. overall 1835/1841 assemblies were successfully read!
 # index no. of whitespace, add to start pos. of list? make separate column for it.
 # Example output:
