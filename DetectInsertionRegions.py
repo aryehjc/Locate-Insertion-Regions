@@ -90,7 +90,8 @@ for csv in csv_files:
     print(f'{csv.name} saved.')
     with open("InsertionRegions.txt", "a") as f:
         print({csv.name}, Insertion_Total_Count, file=f)
-    
+    # Txt file can be copied into your spreadsheet program of choice and converted to chart output to observe distribution of insertion sites.
+
         #above has to be in the for loop so all the totals get added. overall 1835/1841 assemblies were successfully read!
 # index no. of whitespace, add to start pos. of list? make separate column for it.
 # Example output:
