@@ -3,6 +3,9 @@ from pathlib import Path
 import re 
 import numpy as np
 # assign path, think of a way to save final print(df) down below into different directories ..accidentally overwrote a directotry, whoops! good thing i had a backup
+# Requires CSV file from MobileElementFinder.
+# In this script we use ISSEP3's
+# Input lower and upper bound of ISSEP3 range at line 31, lower bound at line 52, lower and upper bound at line 69, upper bound at line 74
 dir = '/home/aryeh/alignments_fasta/' #Directory containing sequence alignments converted to csvs.
 csv_files = [f for f in Path(dir).glob('*.csv')]
  
