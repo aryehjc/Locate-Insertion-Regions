@@ -1,6 +1,6 @@
 import pandas as pd
 from pathlib import Path 
-# assign path
+# assign path, think of a way to save final print(df) down below into different directories ..accidentally overwrote a directotry, whoops! good thing i had a backup
 dir = '/home/aryeh/S_AUREUS/alignments_fasta/testrunfolder/'
 csv_files = [f for f in Path(dir).glob('*.csv')]
  
@@ -13,6 +13,8 @@ for csv in csv_files:
     df["Header"] = df["Header"].str.split('(').str[0]
     print(df)
 
+    df['Start_Position'] = df.Header.str.split('-', expand=True)[0].astype(float) # Finding exact Position 1
+    print(df)
 
     df["Header"] = df.Header.str.split('\s*-\s*')\
                 .apply(lambda x: range(int(x[0]), int(x[-1]) + 1))
@@ -21,7 +23,7 @@ for csv in csv_files:
 
 #df.to_csv('TESTRANGES.csv', sep='\t')
 
-    RangeFinder = (173674, 174345, 19847, 20588, 5367, 6108) #Give ranges in MobileElementFinder output CSV.
+    RangeFinder = (173674, 174345) #Give ranges in MobileElementFinder output CSV.
     df["Res"] = df['Header'].apply(lambda x: any(val in x for val in RangeFinder))
 #print(df)
 #df.to_csv('TESTRANGES2.csv', sep='\t')
@@ -38,15 +40,30 @@ for csv in csv_files:
     df['Insertion Regions'] = df['Sequence'].str.count('\s+')
     print(df)
 #now total the insertion regions for the file
+# somewhere here can try and find the gaps. 
+    df['Gap1'] = df['Sequence'].str.find(' ')
+    df['Gap2'] = df['Sequence'].str.rfind(' ')
+    df['MaxGap'] = df['Start_Position'] + df['Gap2']
+    df.drop(df[df.MaxGap < 173674].index, inplace = True)
+
+    def my_index(string):
+        All_Gap = [i for i, c in enumerate(string) if c == ' '] # this is a test for the function. do not put '', put ' ' for space.
+        return All_Gap
+
+    df['All_Gap'] = df['Sequence'].apply(lambda x: my_index(x)) # finds all positions of insertions.
+    # https://stackoverflow.com/questions/71249186/applying-function-to-column-in-a-dataframe
     Total = df['Insertion Regions'].sum()
     df["Total"] = df['Insertion Regions'].sum()
     print(df)
     print(Total)
+    df['Sequence'] = df['Sequence'].str.replace(' ','.', regex=False)
+    print(df)
+    print(Total)
     print(f'{csv.name} saved.')
-    with open("seqs.txt", "a") as f:
+    with open("MyTestFile2", "a") as f:
         print({csv.name}, Total, file=f)
         #above has to be in the for loop so all the totals get added. overall 1835/1841 assemblies were successfully read!
-
+# index no. of whitespace, add to start pos. of list? make separate column for it.
 # Example output:
 # {AlignmentA.csv} 258
 # {AlignmentB.csv} 132
