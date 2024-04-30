@@ -1,5 +1,7 @@
 import pandas as pd
-from pathlib import Path 
+from pathlib import Path
+import re 
+import numpy as np
 # assign path, think of a way to save final print(df) down below into different directories ..accidentally overwrote a directotry, whoops! good thing i had a backup
 dir = '/home/aryeh/S_AUREUS/alignments_fasta/testrunfolder/'
 csv_files = [f for f in Path(dir).glob('*.csv')]
@@ -37,9 +39,9 @@ for csv in csv_files:
     df['Sequence'] = df['Sequence'].str.replace('.',' ', regex=False)
     print(df)
     df['Sequence'] = df['Sequence'].str.replace(' +', ' ')
-    df['Insertion Regions'] = df['Sequence'].str.count('\s+')
+    df['Indel Regions'] = df['Sequence'].str.count('\s+') # Replace this later to indels, then extract insertions from all_gap if it fits condition.. if possible
     print(df)
-#now total the insertion regions for the file
+#now total the Indel Regions for the file
 # somewhere here can try and find the gaps. 
     df['Gap1'] = df['Sequence'].str.find(' ')
     df['Gap2'] = df['Sequence'].str.rfind(' ')
@@ -51,17 +53,35 @@ for csv in csv_files:
         return All_Gap
 
     df['All_Gap'] = df['Sequence'].apply(lambda x: my_index(x)) # finds all positions of insertions.
-    # https://stackoverflow.com/questions/71249186/applying-function-to-column-in-a-dataframe
-    Total = df['Insertion Regions'].sum()
-    df["Total"] = df['Insertion Regions'].sum()
+
+    def add_start_to_list(row):
+        try:
+            return [val + row['Start_Position'] for val in row['All_Gap']]
+        except TypeError:  # Handle the case where 'All_Gap' is not iterable (i.e., empty)
+            return []
+
+    df['All_Positions'] = df.apply(add_start_to_list, axis=1)
+
+    def filter_and_sum(row):
+        filtered_values = [val for val in row if 173674 < val < 174345]
+        total = sum(filtered_values)
+        return total
+
+    df['Insertions_Found'] = df['All_Positions'].apply(filter_and_sum)
+    df['Total_Insertions'] = np.count_nonzero(df['Insertions_Found'])
+
+    Total_Indels = df['Indel Regions'].sum()
+    df["Total_Indels"] = df['Indel Regions'].sum()
     print(df)
-    print(Total)
+    print(Total_Indels)
+    Insertion_Total_Count = np.count_nonzero(df['Insertions_Found'])
     df['Sequence'] = df['Sequence'].str.replace(' ','.', regex=False)
     print(df)
-    print(Total)
+    print(Total_Indels)
+    print(Insertion_Total_Count)
     print(f'{csv.name} saved.')
-    with open("MyTestFile2", "a") as f:
-        print({csv.name}, Total, file=f)
+    with open("Insertion_Regions.txt", "a") as f:
+        print({csv.name}, Insertion_Total_Count, file=f)
         #above has to be in the for loop so all the totals get added. overall 1835/1841 assemblies were successfully read!
 # index no. of whitespace, add to start pos. of list? make separate column for it.
 # Example output:
