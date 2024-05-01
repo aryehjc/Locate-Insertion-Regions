@@ -66,12 +66,12 @@ for csv in csv_files:
     df['All_Positions'] = df.apply(add_start_to_list, axis=1)
 
     def filter_and_sum(row):
-        filtered_values = [val for val in row if 173674 < val < 174345]
+        filtered_values = [val for val in row if 173674 < val < 174345] # (1) from here (see below) if high start value eg 125k + end of range 174k, it exceeds range (possibly EOF)
         total = sum(filtered_values)
         return total
 
     df['Insertions_Found'] = df['All_Positions'].apply(filter_and_sum)
-    df.drop(df[df.Insertions_Found > 174345].index, inplace = True)
+    df.drop(df[df.Insertions_Found > 174345].index, inplace = True)  # (2) Therefore we filter again to remove exceedingly high values.
     unique_nonzero_values = np.unique(df[df['Insertions_Found'] != 0]['Insertions_Found'])
     total_unique_nonzero_insertions = len(unique_nonzero_values)
     df['Total_Insertions'] = total_unique_nonzero_insertions
