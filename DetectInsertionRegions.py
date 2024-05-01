@@ -66,7 +66,7 @@ for csv in csv_files:
     df['All_Positions'] = df.apply(add_start_to_list, axis=1)
 
     def filter_and_sum(row):
-        filtered_values = [val for val in row if 173674 < val < 174345] # (1) from here (see below) if high start value eg 125k + end of range 174k, it exceeds range (possibly EOF) that's why Total Indels >100!, e.g. at 174345 end of range whitespace..maybe strip() needed
+        filtered_values = [val for val in row if 173674 < val < 174345] # (1) from here (see below) if high start value eg 125k + end of range 174k, it exceeds range (possibly EOF) that's why Total Indels >100!, e.g. at 174345 end of range whitespace..maybe strip() needed.. some end at e.g. 100000-174000 in sequence, End of line has whitespace.
         total = sum(filtered_values)
         return total
 
