@@ -3,10 +3,7 @@ from pathlib import Path
 import re 
 import numpy as np
 # assign path, think of a way to save final print(df) down below into different directories ..accidentally overwrote a directotry, whoops! good thing i had a backup
-# Requires CSV file from MobileElementFinder.
-# In this script we use ISSEP3's
-# Input lower and upper bound of ISSEP3 range at line 31, lower bound at line 52, lower and upper bound at line 69, upper bound at line 74
-dir = '/home/aryeh/alignments_fasta/' #Directory containing sequence alignments converted to csvs.
+dir = '/home/aryeh/S_AUREUS/alignments_fasta/testrunfolder/'
 csv_files = [f for f in Path(dir).glob('*.csv')]
  
 for csv in csv_files:
@@ -28,7 +25,7 @@ for csv in csv_files:
 
 #df.to_csv('TESTRANGES.csv', sep='\t')
 
-    RangeFinder = (173674, 174345) #Give ranges in MobileElementFinder output CSV.
+    RangeFinder = (1, 3000000) #Give ranges in MobileElementFinder output CSV.
     df["Res"] = df['Header'].apply(lambda x: any(val in x for val in RangeFinder))
 #print(df)
 #df.to_csv('TESTRANGES2.csv', sep='\t')
@@ -49,7 +46,7 @@ for csv in csv_files:
     df['Gap1'] = df['Sequence'].str.find(' ')
     df['Gap2'] = df['Sequence'].str.rfind(' ')
     df['MaxGap'] = df['Start_Position'] + df['Gap2']
-    df.drop(df[df.MaxGap < 173674].index, inplace = True)
+    df.drop(df[df.MaxGap < 1].index, inplace = True)
 
     def my_index(string):
         All_Gap = [i for i, c in enumerate(string) if c == ' '] # this is a test for the function. do not put '', put ' ' for space.
@@ -64,34 +61,33 @@ for csv in csv_files:
             return []
 
     df['All_Positions'] = df.apply(add_start_to_list, axis=1)
+    Full_Coordinates = df[['All_Positions']].copy()
 
-    def filter_and_sum(row):
-        filtered_values = [val for val in row if 173674 < val < 174345] # (1) from here (see below) if high start value eg 125k + end of range 174k, it exceeds range (possibly EOF) that's why Total Indels >100!, e.g. at 174345 end of range whitespace..maybe strip() needed.. some end at e.g. 100000-174000 in sequence, End of line has whitespace.
-        total = sum(filtered_values)
-        return total
+    def filter_and_count_unique(row):
+        filtered_values = [val for val in row if 1 < val < 3000000]
+        unique_values = set(filtered_values)
+        return len(unique_values)
+    
+    def filter_positions(row):
+        return [val for val in row if 1 < val < 3000000]
 
-    df['Insertions_Found'] = df['All_Positions'].apply(filter_and_sum)
-    df.drop(df[df.Insertions_Found > 174345].index, inplace = True)  # (2) Therefore we filter again to remove exceedingly high values.
-    unique_nonzero_values = np.unique(df[df['Insertions_Found'] != 0]['Insertions_Found'])
-    total_unique_nonzero_insertions = len(unique_nonzero_values)
-    df['Total_Insertions'] = total_unique_nonzero_insertions
+    df['All_Positions'] = df['All_Positions'].apply(filter_positions)
+    df['Total_Insertions'] = df['All_Positions'].apply(lambda x: len(set(x)))
+
 
     Total_Indels = df['Indel Regions'].sum()
     df["Total_Indels"] = df['Indel Regions'].sum()
     print(df)
     print(Total_Indels)
-    Insertion_Total_Count =  total_unique_nonzero_insertions
+    Insertion_Total_Count =  len(set(df['All_Positions'].explode().dropna()))
     df['Sequence'] = df['Sequence'].str.replace(' ','.', regex=False)
     print(df)
     print(Total_Indels)
     print(Insertion_Total_Count)
-    print(df["Total_Insertions"])
-    print(df["Insertions_Found"])
     print(f'{csv.name} saved.')
-    with open("InsertionRegions.txt", "a") as f:
+    with open("Revised_Insertion_Regions.txt", "a") as f:
         print({csv.name}, Insertion_Total_Count, file=f)
-    # Txt file can be copied into your spreadsheet program of choice and converted to chart output to observe distribution of insertion sites.
-
+    
         #above has to be in the for loop so all the totals get added. overall 1835/1841 assemblies were successfully read!
 # index no. of whitespace, add to start pos. of list? make separate column for it.
 # Example output:
