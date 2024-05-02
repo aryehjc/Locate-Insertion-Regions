@@ -84,6 +84,7 @@ for csv in csv_files:
     print(df)
     print(Total_Indels)
     print(Insertion_Total_Count)
+    print(Full_Coordinates)
     print(f'{csv.name} saved.')
     with open("Revised_Insertion_Regions.txt", "a") as f:
         print({csv.name}, Insertion_Total_Count, file=f)
