@@ -81,10 +81,10 @@ for csv in csv_files:
     print(Total_Indels)
     Insertion_Total_Count =  len(set(df['All_Positions'].explode().dropna()))
     df['Sequence'] = df['Sequence'].str.replace(' ','.', regex=False)
+    print(Full_Coordinates) # Later find a way to extract this in bulk
     print(df)
     print(Total_Indels)
     print(Insertion_Total_Count)
-    print(Full_Coordinates)
     print(f'{csv.name} saved.')
     with open("Revised_Insertion_Regions.txt", "a") as f:
         print({csv.name}, Insertion_Total_Count, file=f)
