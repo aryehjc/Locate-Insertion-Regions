@@ -4,6 +4,7 @@ Find possible phage insertions in genome assembly. Must align reference genome w
 First, run scripts in proteomics-scripts repo in order: Align_Script.py, delta2fasta.py, rubyscript.rb
 
 Getting complete genomes from NCBI first
+```
 mkdir genome_name
 cd genome_name/
 wget ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/assembly_summary_genbank.txt
@@ -11,9 +12,14 @@ grep 'Genome Name' assembly_summary_genbank.txt     | awk 'BEGIN{FS="\t"}{if($12
 ls
 gedit urls.txt 
 IFS=$'\n'; for NEXT in $(cat urls.txt); do wget "$NEXT"; done
-
-./Align_Script.py, for i in *.delta; do ./delta2fasta.py $i alignments_fasta/`basename $i .fasta.delta`_delta.fa ; done 
+```
+```
+./Align_Script.py
+for i in *.delta; do ./delta2fasta.py $i alignments_fasta/`basename $i .fasta.delta`_delta.fa ; done
+```
+```
 for i in *.fa; do ./rubyscript < $i > $i.csv; done
+```
 Use output csv directory in this program and set filepath in code.
 
 Now using the CSVs, run this program. Annotations to be added shortly
