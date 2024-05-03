@@ -1,6 +1,7 @@
 # Locate-Insertion-Regions
 Find possible phage insertions in genome assembly. Must align reference genome with genome assemblies using MUMMer dnadiff, from there convert FASTAs to csv and put all CSVs in a directory to run this program. 
 
+First, run scripts in proteomics-scripts repo in order: Align_Script.py, delta2fasta.py, rubyscript.rb
 
 Getting complete genomes from NCBI first
 mkdir genome_name
@@ -13,7 +14,7 @@ IFS=$'\n'; for NEXT in $(cat urls.txt); do wget "$NEXT"; done
 
 ./Align_Script.py, for i in *.delta; do ./delta2fasta.py $i alignments_fasta/`basename $i .fasta.delta`_delta.fa ; done 
 for i in *.fa; do ./rubyscript < $i > $i.csv; done
-Use output csvs.
+Use output csv directory in this program and set filepath in code.
 
 Now using the CSVs, run this program. Annotations to be added shortly
 
