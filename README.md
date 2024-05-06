@@ -2,6 +2,7 @@
 Find possible phage insertions in genome assembly. Must align reference genome with genome assemblies using MUMMer dnadiff, from there convert FASTAs to csv and put all CSVs in a directory to run this program. 
 
 First, run scripts in proteomics-scripts repo in order: Align_Script.py, delta2fasta.py, rubyscript.rb
+Requires BioPython and MUMMer
 
 Getting complete genomes from NCBI first
 ```
