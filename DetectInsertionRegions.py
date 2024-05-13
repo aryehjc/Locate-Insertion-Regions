@@ -3,6 +3,7 @@ from pathlib import Path
 import re 
 import numpy as np
 # assign path, think of a way to save final print(df) down below into different directories ..accidentally overwrote a directotry, whoops! good thing i had a backup
+position_counts = {}
 dir = '/home/aryeh/S_AUREUS/alignments_fasta/testrunfolder/'
 csv_files = [f for f in Path(dir).glob('*.csv')]
  
@@ -36,7 +37,7 @@ for csv in csv_files:
 #print(df)
     df['Sequence'] = df['Sequence'].astype('string')
 #print(df.dtypes)
-    df['Sequence'] = df['Sequence'].str.replace('.',' ', regex=False)
+    df['Sequence'] = df['Sequence'].str.replace('.',' ', regex=False) #Treats pattern as literal string with False
     print(df)
     df['Sequence'] = df['Sequence'].str.replace(' +', ' ')
     df['Indel Regions'] = df['Sequence'].str.count('\s+') # Replace this later to indels, then extract insertions from all_gap if it fits condition.. if possible
@@ -86,8 +87,24 @@ for csv in csv_files:
     print(Total_Indels)
     print(Insertion_Total_Count)
     print(f'{csv.name} saved.')
-    with open("Revised_Insertion_Regions.txt", "a") as f:
-        print({csv.name}, Insertion_Total_Count, file=f)
+
+    unique_positions = set([item for sublist in df['All_Positions'] for item in sublist])
+    position_frequencies = {pos: 1 for pos in unique_positions}
+    for pos in unique_positions:
+        if pos in position_counts:
+            position_counts[pos] += position_frequencies[pos]
+        else:
+            position_counts[pos] = position_frequencies[pos]
+
+    with open("My_Latest_May_14_Insertion_Regions.txt", "a") as f:
+        print({csv.name}, Insertion_Total_Count, file=f) #Compare this file with Revised_Insertion_Regions
+
+# Create a DataFrame from the position_counts dictionary
+unique_counts_df = pd.DataFrame(list(position_counts.items()), columns=['Position', 'Frequency'])
+
+unique_counts_df = unique_counts_df.sort_values(by='Position')
+print(unique_counts_df)
+unique_counts_df.to_csv('TOTAL_INSERTION_FREQUENCIES.csv', sep=',')
     
         #above has to be in the for loop so all the totals get added. overall 1835/1841 assemblies were successfully read!
 # index no. of whitespace, add to start pos. of list? make separate column for it.
