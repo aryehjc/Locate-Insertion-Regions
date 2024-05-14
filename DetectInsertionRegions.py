@@ -97,7 +97,7 @@ for csv in csv_files:
         else:
             position_counts[pos] = position_frequencies[pos]
 
-    with open("My_Latest_May_16_Insertion_Regions.txt", "a") as f:
+    with open("Insertion_Regions.txt", "a") as f:
         print({csv.name}, Insertion_Total_Count, file=f) #Compare this file with Revised_Insertion_Regions
 
 # Create a DataFrame from the position_counts dictionary
@@ -105,7 +105,7 @@ unique_counts_df = pd.DataFrame(list(position_counts.items()), columns=['Positio
 
 unique_counts_df = unique_counts_df.sort_values(by='Position')
 print(unique_counts_df)
-unique_counts_df.to_csv('TOTAL_May_16_INSERTION_FREQUENCIES.csv', sep=',')
+unique_counts_df.to_csv('Insertion_Region_Frequency.csv', sep=',') # Copy into spreadsheet program to produce histogram. Will add pyplot
     
         #above has to be in the for loop so all the totals get added. overall 1835/1841 assemblies were successfully read!
 # index no. of whitespace, add to start pos. of list? make separate column for it.
