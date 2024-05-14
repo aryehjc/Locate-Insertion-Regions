@@ -4,7 +4,7 @@ import re
 import numpy as np
 # assign path, think of a way to save final print(df) down below into different directories ..accidentally overwrote a directotry, whoops! good thing i had a backup
 position_counts = {}
-dir = '/home/aryeh/S_AUREUS/alignments_fasta/testrunfolder/'
+dir = '/home/aryeh/exampledirectorywithalignments/'
 csv_files = [f for f in Path(dir).glob('*.csv')]
  
 for csv in csv_files:
