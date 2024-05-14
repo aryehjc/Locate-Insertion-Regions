@@ -25,9 +25,10 @@ for csv in csv_files:
 #print(df.Header.dtype)
 
 #df.to_csv('TESTRANGES.csv', sep='\t')
-
-    RangeFinder = (1, 3000000) #Give ranges in MobileElementFinder output CSV.
-    df["Res"] = df['Header'].apply(lambda x: any(val in x for val in RangeFinder))
+    lower_bound = 1
+    upper_bound = 3000000
+ #Give ranges in MobileElementFinder output CSV.
+    df["Res"] = df['Header'].apply(lambda x: any(lower_bound <= val <= upper_bound for val in x))
 #print(df)
 #df.to_csv('TESTRANGES2.csv', sep='\t')
 #print(df.dtypes)
@@ -96,7 +97,7 @@ for csv in csv_files:
         else:
             position_counts[pos] = position_frequencies[pos]
 
-    with open("My_Latest_May_14_Insertion_Regions.txt", "a") as f:
+    with open("My_Latest_May_16_Insertion_Regions.txt", "a") as f:
         print({csv.name}, Insertion_Total_Count, file=f) #Compare this file with Revised_Insertion_Regions
 
 # Create a DataFrame from the position_counts dictionary
@@ -104,7 +105,7 @@ unique_counts_df = pd.DataFrame(list(position_counts.items()), columns=['Positio
 
 unique_counts_df = unique_counts_df.sort_values(by='Position')
 print(unique_counts_df)
-unique_counts_df.to_csv('TOTAL_INSERTION_FREQUENCIES.csv', sep=',')
+unique_counts_df.to_csv('TOTAL_May_16_INSERTION_FREQUENCIES.csv', sep=',')
     
         #above has to be in the for loop so all the totals get added. overall 1835/1841 assemblies were successfully read!
 # index no. of whitespace, add to start pos. of list? make separate column for it.
