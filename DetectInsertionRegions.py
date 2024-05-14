@@ -2,7 +2,7 @@ import pandas as pd
 from pathlib import Path
 import re 
 import numpy as np
-# assign path, think of a way to save final print(df) down below into different directories ..accidentally overwrote a directotry, whoops! good thing i had a backup
+# assign path, think of a way to save final print(df) down below into different directories for each CSV
 position_counts = {}
 dir = '/home/aryeh/exampledirectorywithalignments/'
 csv_files = [f for f in Path(dir).glob('*.csv')]
