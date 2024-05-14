@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the data from the CSV file
-unique_counts_df = pd.read_csv('Insertion_Frequency.csv')
+unique_counts_df = pd.read_csv('TOTAL_May_16_INSERTION_FREQUENCIES.csv')
 
 # Find the position and frequency of the highest y-value
 max_frequency_index = unique_counts_df['Frequency'].idxmax()
