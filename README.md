@@ -13,6 +13,12 @@ grep 'Genome Name' assembly_summary_genbank.txt     | awk 'BEGIN{FS="\t"}{if($12
 ls
 gedit urls.txt 
 IFS=$'\n'; for NEXT in $(cat urls.txt); do wget "$NEXT"; done
+
+#If Complete Genome insufficient, try:
+
+grep 'Genome Name' assembly_summary_genbank.txt | \
+awk 'BEGIN{FS="\t"}{if($12=="Scaffold" && $14=="Full"){print $20}}' | \
+awk 'BEGIN{OFS=FS="/"}{print $0,$NF"_genomic.fna.gz"}' > urls.txt
 ```
 ```
 ./Align_Script.py
