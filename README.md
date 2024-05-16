@@ -27,6 +27,7 @@ awk 'BEGIN{OFS=FS="/"}{print $0,$NF"_genomic.fna.gz"}' > urls.txt
 ```
 ```
 ./Align_Script.py
+#Once this runs, create a directory e.g. 'alignments_fasta' in this example, and run delta2fasta.py
 for i in *.delta; do ./delta2fasta.py $i alignments_fasta/`basename $i .fasta.delta`_delta.fa ; done
 ```
 ```
