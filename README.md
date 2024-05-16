@@ -22,7 +22,8 @@ grep 'Genome Name' assembly_summary_genbank.txt | \
 awk 'BEGIN{FS="\t"}{if($12=="Scaffold" && $14=="Full"){print $20}}' | \
 awk 'BEGIN{OFS=FS="/"}{print $0,$NF"_genomic.fna.gz"}' > urls.txt
 
-# And this will add in Full Scaffold representations of the genome into the dataset for a larger sample size - assuming there are insufficient complete genome assemblies
+# And this will add in Full Scaffold representations of the genome into the dataset for a larger sample size
+# - assuming there are insufficient complete genome assemblies
 ```
 ```
 ./Align_Script.py
