@@ -8,6 +8,7 @@ Getting complete genomes from NCBI first
 
 Unpack fasta files into a directory eg FASTA, copy fasta names into text file assemblies.txt, and choose a reference genome for the alignment. Put the reference genome fasta into the FASTA directory with the others. Return to home directory and run the following programs.
 ```
+#Pipeline:
 mkdir genome_name
 cd genome_name/
 wget ftp://ftp.ncbi.nlm.nih.gov/genomes/genbank/assembly_summary_genbank.txt
