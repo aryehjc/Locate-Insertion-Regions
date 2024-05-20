@@ -6,7 +6,7 @@ unique_counts_df = pd.read_csv('TOTAL_May_16_INSERTION_FREQUENCIES.csv')
 
 # Plot the data as a bar plot with fixed-width bins
 plt.figure(figsize=(10, 6))  # Adjust the figure size if needed
-plt.hist(unique_counts_df['Position'], bins=30, weights=unique_counts_df['Frequency'], color='skyblue', edgecolor='black')
+plt.hist(unique_counts_df['Position'], bins=30, weights=unique_counts_df['Frequency'], color='skyblue', edgecolor='black') # We use 30 bins because it's a range 1-3 million base pairs, so 100000 per bin
 plt.xlabel('Position')
 plt.ylabel('Frequency')
 plt.title('Insertion Frequencies by Position (Fixed-width Bins)')
