@@ -1,4 +1,5 @@
 # Locate-Insertion-Regions
+Jun 13 2024: Updated to V3, debugged, works as expected with correct reference genome.
 
 May 24 2024: Have made a Version 2, checking for bugs. DetectInsertionRegions_PossibleV2_Latest, check on small seqs.
 So far similar trendline, will try a new reference genome that has been published to NCBI, my own doesn't give expected trends.
