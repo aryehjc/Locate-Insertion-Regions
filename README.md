@@ -1,4 +1,7 @@
 # Locate-Insertion-Regions
+
+Jun 27 2024: Works as expected on various references.
+
 Jun 13 2024: Updated to V3, debugged, works as expected with correct reference genome.
 
 May 24 2024: Have made a Version 2, checking for bugs. DetectInsertionRegions_PossibleV2_Latest, check on small seqs.
