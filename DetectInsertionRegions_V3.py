@@ -4,6 +4,7 @@ import re
 import numpy as np
 # Still detects in relatively same region after amended logic, so it's possibly needing a new reference for circular representation!
 # Assign path
+# Change upper and lower bounds according to total basepairs in the FASTA file.
 position_counts = {}
 dir = '/home/aryeh/example_directory'
 csv_files = [f for f in Path(dir).glob('*.csv')]
