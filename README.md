@@ -2,6 +2,7 @@
 
 
 Aug 1 2024: Attempting to incorporate GC values, KL Divergence, Pearson correlation coefficient of two compared insertion plots
+
 Jun 27 2024: Works as expected on various references.
 
 Jun 13 2024: Updated to V3, debugged, works as expected with correct reference genome.
