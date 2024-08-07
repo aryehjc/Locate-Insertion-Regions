@@ -41,8 +41,8 @@ def save_gc_content_plot(gc_contents, output_pdf_path):
     plt.close()
 
 # Replace 'your_file.fasta' with the path to your FASTA file
-fasta_file_path = 'GENOME.fasta'
-output_pdf_path = 'gc_content_distribution.pdf'
-#i did this with NZ too
+fasta_file_path = 'FASTA.fasta'
+output_pdf_path = 'GC_Content_of_FASTA_Genome.pdf'
+
 gc_contents = process_fasta(fasta_file_path)
 save_gc_content_plot(gc_contents, output_pdf_path)
