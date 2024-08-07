@@ -10,12 +10,18 @@ def calculate_gc_content(sequence):
     if total_bases == 0:
         return 0.0
     return ((g_count + c_count) / total_bases) * 100
-
-def get_gc_content_around_positions(sequence, positions, window_size=100):
+# change to 10000 and see if there's a major difference (there is, fatter 10% graph. I saved it separately)
+def get_gc_content_around_positions(sequence, positions, window_size=10000):
     gc_contents = []
     seq_length = len(sequence)
     
     for pos in positions:
+        # Ensure the position is within the valid range
+        if pos < 0 or pos >= seq_length:
+            print(f"Position {pos} is out of bounds.")
+            continue
+        
+        # Calculate window boundaries
         start = max(0, pos - window_size // 2)
         end = min(seq_length, pos + window_size // 2)
         
@@ -24,9 +30,16 @@ def get_gc_content_around_positions(sequence, positions, window_size=100):
         
         # Calculate GC content for the region
         gc_content = calculate_gc_content(region)
+        
+        # Print for debugging
+        if gc_content == 0:
+            print(f"Zero GC Content detected at position {pos}: Sequence region: {region}")
+        
         gc_contents.append(gc_content)
     
     return gc_contents
+
+
 
 def get_top_10_percent(df):
     # Determine the number of top rows to select (10% of the total rows)
@@ -54,7 +67,7 @@ def plot_gc_content_boxplot(gc_contents, output_pdf_path):
 # File paths
 csv_file_path = 'FASTA.csv'
 fasta_file_path = 'FASTA.fasta'
-output_pdf_path = 'gc_content_top_10_percent.pdf'
+output_pdf_path = 'BOXPLOT_10_PERCENT.pdf'
 
 # Read the CSV file
 df = pd.read_csv(csv_file_path)
