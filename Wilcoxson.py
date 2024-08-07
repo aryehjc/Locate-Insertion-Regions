@@ -27,17 +27,31 @@ def process_fasta(file_path, chunk_size=10000):
             gc_contents.append(gc_content)
     
     return gc_contents
-
+# change to 100 see if there's a major diffrence, there is, it's a fatter graph.
 def get_gc_content_around_positions(sequence, positions, window_size=10000):
     gc_contents = []
     seq_length = len(sequence)
     
     for pos in positions:
+        # Ensure the position is within the valid range
+        if pos < 0 or pos >= seq_length:
+            print(f"Position {pos} is out of bounds.")
+            continue
+        
+        # Calculate window boundaries
         start = max(0, pos - window_size // 2)
         end = min(seq_length, pos + window_size // 2)
         
+        # Extract the region around the position
         region = sequence[start:end]
+        
+        # Calculate GC content for the region
         gc_content = calculate_gc_content(region)
+        
+        # Print for debugging
+        if gc_content == 0:
+            print(f"Zero GC Content detected at position {pos}: Sequence region: {region}")
+        
         gc_contents.append(gc_content)
     
     return gc_contents
@@ -79,7 +93,7 @@ def plot_overlayed_boxplots(gc_contents_all, gc_contents_top_10, output_pdf_path
     plt.close()
 
 
-# File paths
+# File paths, input your FASTA reference genome and csv here
 csv_file_path = 'FASTA.csv'
 fasta_file_path = 'FASTA.fasta'
 output_pdf_path = 'gc_content_overlay_with_wilcoxon.pdf'
