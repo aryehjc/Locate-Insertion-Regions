@@ -1,5 +1,6 @@
 # Locate-Insertion-Regions
 
+Nov 7 2024: All scripts working as intended
 
 Aug 1 2024: Attempting to incorporate GC values, KL Divergence, Pearson correlation coefficient of two compared insertion plots
 
