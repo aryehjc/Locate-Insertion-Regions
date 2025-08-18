@@ -41,6 +41,7 @@ awk 'BEGIN{OFS=FS="/"}{print $0,$NF"_genomic.fna.gz"}' > urls.txt
 ```
 Make directory called FASTA and unzip the .gz files into that directory, run ./Align_Script.py
 in urls.txt(assemblies.txt), use regex to convert https://ftp. file into format GCA_(number).1_(number)v1_genomic.fna
+run mummerplot (show later)
 #Once this runs, create a directory e.g. 'alignments_fasta' in this example, and run delta2fasta.py
 for i in *.delta; do ./delta2fasta.py $i alignments_fasta/`basename $i .fasta.delta`_delta.fa ; done
 ```
