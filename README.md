@@ -11,6 +11,8 @@ Jun 13 2024: Updated to V3, debugged, works as expected with correct reference g
 May 24 2024: Have made a Version 2, checking for bugs. DetectInsertionRegions_PossibleV2_Latest, check on small seqs.
 So far similar trendline, will try a new reference genome that has been published to NCBI, my own doesn't give expected trends.
 
+Aug 20 2025 - Version 4 created to handle deprecation of old regex syntax
+
 This program was written by myself, Aryeh Chiam, to find possible phage insertions in genome assembly. Must align reference genome with genome assemblies using MUMMer dnadiff, from there convert FASTAs to csv and put all CSVs in a directory to run this program. Updated as of May 16 2024
 
 First, run scripts in proteomics-scripts repo in order: Align_Script.py, delta2fasta.py, rubyscript.rb.
