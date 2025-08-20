@@ -13,7 +13,7 @@ So far similar trendline, will try a new reference genome that has been publishe
 
 Aug 20 2025 - Version 4 created to handle deprecation of old regex syntax
 
-This program was written by myself, Aryeh Chiam, to find possible phage insertions in genome assembly. Must align reference genome with genome assemblies using MUMMer dnadiff, from there convert FASTAs to csv and put all CSVs in a directory to run this program. Updated as of May 16 2024
+This program was written by myself, Aryeh Chiam, to find possible phage insertions in genome assembly. Must align reference genome with genome assemblies using MUMMer dnadiff, from there convert FASTAs to csv and put all CSVs in a directory to run this program. Updated as of Aug 20 2025
 
 First, run scripts in proteomics-scripts repo in order: Align_Script.py, delta2fasta.py, rubyscript.rb.
 Requires BioPython and MUMMer
