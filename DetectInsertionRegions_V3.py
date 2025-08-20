@@ -92,7 +92,7 @@ for csv in csv_files:
     df.to_csv(Path(dir, output_filename), index=False)
 
     # Append to summary file
-    with open("TOTAL_Jun_13_12pm_Insertion_Regions_S_AUREUS.txt", "a") as f:
+    with open("Insertion_regions.txt", "a") as f:
         print({csv.name}, Insertion_Total_Count, file=f)
 
 # Create a DataFrame from the position_counts dictionary
@@ -100,5 +100,5 @@ unique_counts_df = pd.DataFrame(list(position_counts.items()), columns=['Positio
 unique_counts_df = unique_counts_df.sort_values(by='Position')
 
 # Save the frequency DataFrame
-unique_counts_df.to_csv('TOTAL_Jun_13_12pm_INSERTION_FREQUENCIES_S_AUREUS.csv', sep=',', index=False)
+unique_counts_df.to_csv('Insertion_frequencies.csv', sep=',', index=False)
 print(unique_counts_df)
